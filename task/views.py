@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .email import send_welcome_email
 
 
 # Create your views here.
@@ -22,3 +23,20 @@ def search_results(request):
     else:
         message = " Found 0 images for the search term"
         return render(request, 'all-task/search.html',{"message":message})
+
+
+def task_today(request):
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+
+            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+
+            HttpResponseRedirect('task_today')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'indexx.html', {"projects":projects,"letterForm":form})
