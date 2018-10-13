@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .forms import NewsLetterForm
+from .forms import NewProjectsForm
+from .models import Profile , Projects
 
 
 # Create your views here.
