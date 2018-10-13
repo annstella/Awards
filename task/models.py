@@ -44,8 +44,8 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
      instance.profile.save()
 
-class Image(models.Model):
-    image = models.ImageField(upload_to='images/')
+class Projects(models.Model):
+    projects = models.ImageField(upload_to='images/')
     caption = models.TextField(blank=True)
     likes = models.PositiveIntegerField(default=0)
     user= models.ForeignKey(User)
@@ -61,9 +61,7 @@ class Image(models.Model):
     def total_likes(self):
         return self.likes.count()
 
-    def save_comment(self):
-        self.save()
-
+    
     @classmethod
     def get_images(cls):
                 images = Image.objects.all()
