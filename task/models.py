@@ -43,3 +43,33 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
      instance.profile.save()
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='images/')
+    caption = models.TextField(blank=True)
+    likes = models.PositiveIntegerField(default=0)
+    user= models.ForeignKey(User)
+    # post = HTMLField()
+    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.caption
+
+    def save_images(self):
+        self.save()
+
+    def total_likes(self):
+        return self.likes.count()
+
+    def save_comment(self):
+        self.save()
+
+    @classmethod
+    def get_images(cls):
+                images = Image.objects.all()
+                return images
+
+    @classmethod
+    def get_image_by_id(cls, id):
+                image = Image.objects.filter(user_id=id).all()
+                return image
