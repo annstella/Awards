@@ -61,3 +61,18 @@ def profile(request, user_username = None):
         "profile" : profile }
         
     return render(request, 'profile/profile.html',context)
+
+@login_required(login_url='/accounts/login/')
+def new_projects(request):
+    current_user = request.user
+    if request.method == 'POST':
+        projects_form = NewProjectsForm(request.POST, request.FILES)
+        if projects_form.is_valid():
+            projects = projects_form.save(commit=False)
+            projects.user = current_user
+            projects.save()
+        return redirect('welcome')
+
+    else:
+        projects_form = NewProjectsForm()
+    return render(request, 'new_projects.html', {"projects_form": projects_form})
