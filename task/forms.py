@@ -16,3 +16,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Projects
         exclude = ['creator', 'likes', 'time',  'profile']
+
+class NewProjectsForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = ['projects','caption']
