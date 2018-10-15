@@ -1,6 +1,35 @@
-{% extends 'all-task/base.html' %}
+{%extends 'all-task/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
 
+{% block styles%}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/basetask.css' %}">
 
-{% block content %} 
-<!-- <h1>AWARDS WEBSITE</h1> -->
+ <link href="https://fonts.googleapis.com/css?family=Boogaloo|Fredoka+One|Lalezar|Patrick+Hand" rel="stylesheet"> 
 {% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+  {% for projects in task %}
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <div class="well">
+      <div class="item">
+        <a href="/viewproject/{{projects.id}}"><img src="{{pro.landing_page.url}}" class="img-responsive"><p class="view">View Project</p></a> 
+      </div>
+      <br>
+  <p class="title">{{projects.title}}</p>
+  {% if projects.profile.profile_pic %}
+  <a href="/user/{{projects.user_id}}"><p class="user"> <img src="{{projects.profile.profile_pic.url}}" id="me"> By {{projects.user.username}}</p></a>
+ 
+   {%else%}
+   <a href="/user/{{projects.user_id}}"><p class="user"> <img src="" id="me"> By {{projects.user.username}}</p></a>
+    {% endif %}
+      </div>
+  </div>
+
+  {% endfor%}
+</div>
+{% endblock%}

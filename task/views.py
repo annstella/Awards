@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from .forms import NewsLetterForm
@@ -7,9 +7,10 @@ from .models import Profile , Projects
 
 
 # Create your views here.
-@login_required(login_url='/login')
+@login_required(login_url='/accounts/login')
 def welcome(request):
-    return render(request,'indexx.html')
+    task = Projects.objects.all() 
+    return render(request,'indexx.html', locals())
 
 # def task(request):
 #    task = Image.objects.all()
@@ -65,17 +66,21 @@ def profile(request, user_username = None):
         
     return render(request, 'profile/profile.html',context)
 
+
 @login_required(login_url='/accounts/login/')
 def new_projects(request):
-    current_user = request.user
-    if request.method == 'POST':
-        projects_form = NewProjectsForm(request.POST, request.FILES)
-        if projects_form.is_valid():
-            projects = projects_form.save(commit=False)
-            projects.user = current_user
-            projects.save()
-        return redirect('welcome')
+    profile = Profile.objects.all()
+    for profile in profile:
+        current_user = request.user
+        if request.method == 'POST':
+            projects_form = NewProjectsForm(request.POST, request.FILES)
+            if projects_form.is_valid():
+                projects = projects_form.save(commit=False)
+                projects.user = current_user
+                projects.profile = profile
+                projects.save()
+            return redirect('welcome')
 
-    else:
-        projects_form = NewProjectsForm()
+        else:
+            projects_form = NewProjectsForm()
     return render(request, 'new_projects.html', {"projects_form": projects_form})

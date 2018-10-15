@@ -20,4 +20,4 @@ class PostForm(forms.ModelForm):
 class NewProjectsForm(forms.ModelForm):
     class Meta:
         model = Projects
-        fields = ['projects','caption']
+        fields = ['projects','caption','url']
