@@ -47,7 +47,8 @@ class Profile(models.Model):
 class Projects(models.Model):
     projects = models.ImageField(upload_to='images/')
     caption = models.TextField(blank=True)
-    likes = models.PositiveIntegerField(default=0)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    url = models.TextField()
     user= models.ForeignKey(User)
     # post = HTMLField()
     # profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
