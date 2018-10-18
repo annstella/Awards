@@ -68,3 +68,12 @@ class Projects(models.Model):
     def get_projects_by_id(cls, id):
                 project = Projects.objects.filter(user_id=id).all()
                 return projects
+
+class ProjectsMerch(models.Model):
+    name = models.CharField(max_length=40)
+    description = models.TextField()
+    
+class ProfileMerch(models.Model):
+    name = models.CharField(max_length=40)
+    description = models.TextField()
+    
