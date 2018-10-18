@@ -58,10 +58,6 @@ class Projects(models.Model):
 
     def save_images(self):
         self.save()
-
-    def total_likes(self):
-        return self.likes.count()
-
     
     @classmethod
     def get_images(cls):
@@ -69,6 +65,6 @@ class Projects(models.Model):
                 return images
 
     @classmethod
-    def get_image_by_id(cls, id):
-                image = Image.objects.filter(user_id=id).all()
-                return image
+    def get_projects_by_id(cls, id):
+                project = Projects.objects.filter(user_id=id).all()
+                return projects
