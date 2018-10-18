@@ -7,6 +7,8 @@ urlpatterns=[
     url('^$',views.welcome,name = 'welcome'),
     url(r'^search/', views.search_results, name='search_results'),
     url(r'^new/projects$', views.new_projects, name='new-projects'),
+    url(r'^api/profile/$', views.ProfileList.as_view()),
+    url(r'^api/projects/$', views.ProjectsList.as_view()),
 ]
 
 if settings.DEBUG:

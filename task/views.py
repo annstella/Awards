@@ -6,8 +6,7 @@ from .forms import NewProjectsForm
 from .models import Profile , Projects
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  ProjectsMerch, ProfileMerch
-from .serializer import MerchSerializer
+from .serializer import ProfileSerializer, ProjectsSerializer
 
 
 # Create your views here.
@@ -89,14 +88,14 @@ def new_projects(request):
             projects_form = NewProjectsForm()
     return render(request, 'new_projects.html', {"projects_form": projects_form})
 
-class MerchList(APIView):
+class ProfileList(APIView):
     def get(self, request, format=None):
-        all_merch = ProfileMerch.objects.all()
-        serializers = MerchSerializer(all_merch, many=True)
+        all_merch = Profile.objects.all()
+        serializers = ProfileSerializer(all_merch, many=True)
         return Response(serializers.data)
 
-class MerchList(APIView):
+class ProjectsList(APIView):
     def get(self, request, format=None):
-        all_merch = ProjectsMerch.objects.all()
-        serializers = MerchSerializer(all_merch, many=True)
+        all_merch = Projects.objects.all()
+        serializers = ProjectsSerializer(all_merch, many=True)
         return Response(serializers.data)
