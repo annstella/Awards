@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import NewsLetterForm
 from .forms import NewProjectsForm
 from .models import Profile , Projects
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import  ProjectsMerch, ProfileMerch
+from .serializer import MerchSerializer
 
 
 # Create your views here.
@@ -84,3 +88,15 @@ def new_projects(request):
         else:
             projects_form = NewProjectsForm()
     return render(request, 'new_projects.html', {"projects_form": projects_form})
+
+class MerchList(APIView):
+    def get(self, request, format=None):
+        all_merch = ProfileMerch.objects.all()
+        serializers = MerchSerializer(all_merch, many=True)
+        return Response(serializers.data)
+
+class MerchList(APIView):
+    def get(self, request, format=None):
+        all_merch = ProjectsMerch.objects.all()
+        serializers = MerchSerializer(all_merch, many=True)
+        return Response(serializers.data)

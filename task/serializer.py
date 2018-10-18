@@ -8,5 +8,5 @@ class MerchSerializer(serializers.ModelSerializer):
 
 class MerchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProjectMerch
+        model = ProjectsMerch
         fields = ('name', 'description')
